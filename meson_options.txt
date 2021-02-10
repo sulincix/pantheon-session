@@ -4,5 +4,11 @@ option('mimeapps-list', type : 'boolean', value: true,
 option('fallback-session', type : 'string', value: 'ubuntu',
        description : 'Fallback session to use for Pantheon')
 
+option('gnome-session', type : 'boolean', value: false,
+	description : 'Use gnome-session for sesison starting')
+
+option('use-non-gnome', type : 'boolean', value: true,
+	description : 'Use non-gnome type session for sesison starting')
+
 option('detect-program-prefixes', type: 'boolean', value: false,
        description : 'This is needed for platforms that install packages into individual prefixes (like Guix System or NixOS')
