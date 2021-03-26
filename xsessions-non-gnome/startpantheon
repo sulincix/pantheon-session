@@ -34,7 +34,7 @@ xdgrun(){
 }
 
 #Run autostart
-for dir in (/etc/xdg/autostart ~/.local/share/autostart)
+for dir in /etc/xdg/autostart ~/.local/share/autostart
 do
 	ls $dir | while read name
 	do
