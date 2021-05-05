@@ -1,4 +1,4 @@
-option('mimeapps-list', type : 'boolean', value: true,
+option('mimeapps-list', type : 'boolean', value: false,
        description : 'Install Pantheon default mimetype associations')
 
 option('fallback-session', type : 'string', value: 'ubuntu',

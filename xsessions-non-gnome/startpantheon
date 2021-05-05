@@ -4,18 +4,34 @@ export DESKTOP_SESSION=pantheon
 export XDG_CURRENT_DESKTOP=pantheon
 export XDG_SESSION_DESKTOP=pantheon
 export GDMSESSION=pantheon
+if [[ -f ~/.config/pantheon-wm ]] ; then
+    bash ~/.config/pantheon-wm &
+else
+    gala &
+fi
 {
 cat << EOF
-[GNOME Session]
-Name=Pantheon
-RequiredComponents=gala;gala-daemon;org.gnome.SettingsDaemon.A11ySettings;org.gnome.SettingsDaemon.Color;org.gnome.SettingsDaemon.Datetime;org.gnome.SettingsDaemon.Housekeeping;org.gnome.SettingsDaemon.Keyboard;org.gnome.SettingsDaemon.MediaKeys;org.gnome.SettingsDaemon.Power;org.gnome.SettingsDaemon.PrintNotifications;org.gnome.SettingsDaemon.Rfkill;org.gnome.SettingsDaemon.Sharing;org.gnome.SettingsDaemon.Smartcard;org.gnome.SettingsDaemon.Sound;org.gnome.SettingsDaemon.Wacom;org.gnome.SettingsDaemon.XSettings;
-FallbackSession=gnome
-DesktopName=Pantheon
+org.gnome.SettingsDaemon.A11ySettings
+org.gnome.SettingsDaemon.Color
+org.gnome.SettingsDaemon.Datetime
+org.gnome.SettingsDaemon.Housekeeping
+org.gnome.SettingsDaemon.Keyboard
+org.gnome.SettingsDaemon.MediaKeys
+org.gnome.SettingsDaemon.Power
+org.gnome.SettingsDaemon.PrintNotifications
+org.gnome.SettingsDaemon.Rfkill
+org.gnome.SettingsDaemon.Sharing
+org.gnome.SettingsDaemon.Smartcard
+org.gnome.SettingsDaemon.Sound
+org.gnome.SettingsDaemon.Wacom
+org.gnome.SettingsDaemon.XSettings
 EOF
-} | grep "RequiredComponents" | sed "s/.*=//g" | sed "s/;/\n/g" | while read line ; do
-	if [ -f /usr/share/applications/$line.desktop ] ; then
+}  | while read line ; do
+	if [[ -f /usr/share/applications/$line.desktop ]] 
+ then
 		$(cat /usr/share/applications/$line.desktop | grep "Exec=" | sed "s/^Exec=//g") &	
-	elif [ -f /etc/xdg/autostart/$line.desktop ] ; then
+	elif [[ -f /etc/xdg/autostart/$line.desktop ]]
+ then
 		$(cat /etc/xdg/autostart/$line.desktop | grep "Exec=" | sed "s/^Exec=//g") &
 	else
 		echo $line Not found
@@ -23,9 +39,11 @@ EOF
 done
 xdgrun(){
 	file="$XDG_DIR/$1"
-	if cat $file | grep  "NotShowIn" | grep -i "$XDG_SESSION_DESKTOP" &>/dev/null; then
+	if cat $file | grep  "NotShowIn" | grep -i "$XDG_SESSION_DESKTOP" &>/dev/null
+ then
 		echo "Skip: $1"
-	elif cat $file | grep  "OnlyShowIn" | grep -vi "$XDG_SESSION_DESKTOP" &>/dev/null; then
+	elif cat $file | grep  "OnlyShowIn" | grep -vi "$XDG_SESSION_DESKTOP" &>/dev/null
+ then
 		echo "Skip: $1"
 	else
 		$(cat $file | grep "^Exec=" | sed "s/^Exec=//g") &
@@ -34,7 +52,7 @@ xdgrun(){
 }
 
 #Run autostart
-for dir in (/etc/xdg/autostart ~/.local/share/autostart)
+for dir in /etc/xdg/autostart ~/.local/share/autostart
 do
 	ls $dir | while read name
 	do
