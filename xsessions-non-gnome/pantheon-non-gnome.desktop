@@ -2,7 +2,7 @@
 Name=Pantheon
 Comment=This session provides elementary experience
 Exec=startpantheon
-TryExec=wingpanel
+TryExec=io.elementary.wingpanel
 Icon=
 DesktopNames=Pantheon
 Type=Application
