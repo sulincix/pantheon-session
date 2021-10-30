@@ -1,9 +1,19 @@
 #!/bin/bash
-export XDG_MENU_PREFIX=pantheon-
-export DESKTOP_SESSION=pantheon
-export XDG_CURRENT_DESKTOP=pantheon
-export XDG_SESSION_DESKTOP=pantheon
-export GDMSESSION=pantheon
+# It is part of startlxde
+# Launch DBus if needed
+if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+	if which dbus-launch >/dev/null; then
+		eval "$(dbus-launch --sh-syntax --exit-with-session)"
+	fi
+else
+	if which dbus-update-activation-environment >/dev/null; then
+		dbus-update-activation-environment --systemd --all
+	fi
+fi
+
+export XDG_MENU_PREFIX="pantheon-"
+export XDG_CURRENT_DESKTOP="PANTHEON"
+export XDG_SESSION_DESKTOP="PANTHEON"
 if [[ -f ~/.config/pantheon-wm ]] ; then
     bash ~/.config/pantheon-wm &
 else
