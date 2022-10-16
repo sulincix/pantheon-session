@@ -6,3 +6,8 @@ install_data(
     'startpantheon',
     install_dir: bindir
 )
+install_data(
+    'session-manager.py',
+    install_dir: bindir,
+    rename: 'pantheon-session-manager'
+)
