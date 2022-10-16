@@ -70,4 +70,4 @@ do
 	done
 done
 # Infinitive sleep
-exec sleep inf
+exec pantheon-session-manager
